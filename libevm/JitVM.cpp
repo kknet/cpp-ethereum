@@ -4,6 +4,9 @@
 #include <libevm/VM.h>
 #include <libevm/VMFactory.h>
 
+// FIXME: Include from Here when ready there.
+struct evm_instance* hera_create();
+
 namespace dev
 {
 namespace eth
@@ -17,7 +20,11 @@ class EVM
 {
 public:
 	EVM():
+#if ETH_HERA
+		m_instance(hera_create())
+#else
 		m_instance(evmjit_create())
+#endif
 	{
 		assert(m_instance->abi_version == EVM_ABI_VERSION);
 	}

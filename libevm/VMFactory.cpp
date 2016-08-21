@@ -19,7 +19,7 @@
 #include <libdevcore/Assertions.h>
 #include "VM.h"
 
-#if ETH_EVMJIT
+#if ETH_EVMJIT || ETH_HERA
 #include "JitVM.h"
 #include "SmartVM.h"
 #endif
@@ -118,7 +118,10 @@ std::unique_ptr<VMFace> VMFactory::create()
 
 std::unique_ptr<VMFace> VMFactory::create(VMKind _kind)
 {
-#if ETH_EVMJIT
+#if ETH_HERA
+	asserts(_kind == VMKind::JIT && "JIT disabled in build configuration");
+	return std::unique_ptr<VMFace>(new JitVM);
+#elif ETH_EVMJIT
     switch (_kind)
     {
     default:

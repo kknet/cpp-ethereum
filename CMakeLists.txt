@@ -149,6 +149,10 @@ if (EVMJIT)
     add_subdirectory(evmjit)
 endif()
 
+if (HERA)
+    add_subdirectory(hera)
+endif()
+
 add_subdirectory(eth)
 
 if (TOOLS)
